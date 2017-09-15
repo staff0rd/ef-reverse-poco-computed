@@ -26,6 +26,8 @@
 // TargetFrameworkVersion = 4.6
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Test
 {
@@ -452,8 +454,22 @@ namespace Test
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.32.0.0")]
     public class MyEntity
     {
+        [Column(@"Id", Order = 1, TypeName = "int")]
+        [Required]
+        [Key]
+        [Display(Name = "Id")]
         public int Id { get; set; } // Id (Primary key)
+
+        [Required]
+        [MaxLength(10)]
+        [StringLength(10)]
+        [Display(Name = "My column")]
         public string MyColumn { get; set; } // MyColumn (length: 10)
+
+        [Required]
+        [MaxLength(10)]
+        [StringLength(10)]
+        [Display(Name = "My computed column")]
         public string MyComputedColumn { get; private set; } // MyComputedColumn (length: 10)
     }
 
@@ -473,11 +489,9 @@ namespace Test
         public MyEntityConfiguration(string schema)
         {
             ToTable("MyEntity", schema);
-            HasKey(x => x.Id);
-
-            Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-            Property(x => x.MyColumn).HasColumnName(@"MyColumn").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10);
-            Property(x => x.MyComputedColumn).HasColumnName(@"MyComputedColumn").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed);
+            Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.MyColumn).HasColumnName(@"MyColumn").HasColumnType("varchar").IsUnicode(false);
+            Property(x => x.MyComputedColumn).HasColumnName(@"MyComputedColumn").HasColumnType("varchar").IsUnicode(false).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
         }
     }
 

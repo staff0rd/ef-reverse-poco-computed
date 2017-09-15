@@ -15,7 +15,7 @@ namespace Test
             var context = new MyDbContext();
             context.MyEntities.Add(entity);
             context.GetValidationErrors()
-                .SelectMany(p => p.ValidationErrors).Select(p => $"{p.PropertyName} - ${p.ErrorMessage})")
+                .SelectMany(p => p.ValidationErrors).Select(p => $"{p.PropertyName} - {p.ErrorMessage}")
                 .ShouldBeEmpty();
         }
 
